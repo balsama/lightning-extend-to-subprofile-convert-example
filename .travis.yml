@@ -71,6 +71,7 @@ install:
   - composer require acquia/lightning:dev-8.x-subprofile --no-update
   # We need to blow away the lock file and core entirely because of a bug in
   # composer-patches. See:
+  # https://github.com/cweagans/composer-patches/issues/98
   - rm composer.lock
   - rm -rf docroot/core
   - composer install
@@ -98,7 +99,7 @@ before_script:
   - composer run prepare-behat
 
 script:
-  - bin/behat --strict --stop-on-failure --tags=~layout
+  - bin/behat --strict --tags=subprofile,
 
 matrix:
   fast_finish: true
