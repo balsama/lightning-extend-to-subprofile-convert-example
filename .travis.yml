@@ -74,10 +74,11 @@ install:
 
   # Convert existing extend file to proper subprofile
   - cd docroot/profiles/contrib/lightning
-  - composer run migrate-extender $HOME/docroot/sites/default/lightning.extend.yml
+  - ls $TRAVIS_BUILD_DIR/docroot/sites/default/
+  - composer run migrate-extender $TRAVIS_BUILD_DIR/docroot/sites/default/lightning.extend.yml
 
   # Install Lightning.
-  - cd $HOME/docroot
+  - cd $TRAVIS_BUILD_DIR/docroot
   - ../bin/drush site-install lighting_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - ../bin/drush config-set system.logging error_level all --yes
 
