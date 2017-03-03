@@ -80,6 +80,7 @@ install:
 
   # Install Lightning sub-profile.
   - cd $TRAVIS_BUILD_DIR/docroot
+  - chmod u+w sites/default/settings.php
   - ../bin/drush site-install lightning_extender --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - ../bin/drush config-set system.logging error_level all --yes
 
