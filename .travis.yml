@@ -74,7 +74,7 @@ install:
 
   # Convert existing extend file to proper subprofile
   - cd docroot/profiles/contrib/lightning
-  - composer run migrate-extender docroot/sites/default/lightning.extend.yml
+  - composer run migrate-extender $HOME/docroot/sites/default/lightning.extend.yml
 
   # Install Lightning.
   - cd $HOME/docroot
