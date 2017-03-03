@@ -1,6 +1,8 @@
-## What this project is
+## Drupal Lightning Extend -> Sub-profile
 
-The [Drupal distribution Lightning](https://github.com/acquia/lightning)
+## What is this project?
+
+The [Lightning Drupal distribution](https://github.com/acquia/lightning)
 provides a script which converts a legacy extend file into a sub-profile that
 extends Lightning. This project is used to test that functionality and
 Lightning's support for sub-profiles in general.
@@ -12,18 +14,23 @@ script to do so is included in Lightning itself. This is just an example.
 This project isn't meant to be used. But you might find value in reading through
 the .travis.yml file.
 
-If you just want to convert your existing project's lightning.extend.yml file
-into a sub-profile, Lightning provides a binary:
+**If you just want to convert your existing project's lightning.extend.yml file
+into a sub-profile, Lightning provides a binary:**
 
     ./vendor/bin/lightning-subprofile /path/to/your/extend/file/lightning.extend.yml
 
-Note that the path to your bin directory That will create a subprofile in /docroot/profiles/custom/ named
-lightning_extend. Install it with:
+> **Note:** that the path to your bin directory might be different.
 
-    drush site-install lightning_extend
+> **Note:** The provided binary uses a custom DrupalConsole command that
+  currently requires Drupal to be installed for it to work.
+
+The script will create a sub-profile in /docroot/profiles/custom/ named
+`lightning_extender`. Install it with:
+
+    drush site-install lightning_extender
 
 Lightning also provides a DrupalConsole command to create a new sub-profile
-interactively. To use that command, you must first install Lightning, then run:
+interactively. To use that command, you must first install Drupal, then run:
 
     drupal lightning:subprofile
 
