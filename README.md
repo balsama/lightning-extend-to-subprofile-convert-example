@@ -13,12 +13,11 @@ This project isn't meant to be used. But you might find value in reading through
 the .travis.yml file.
 
 If you just want to convert your existing project's lightning.extend.yml file
-into a sub-profile, switch into your project's Lightning Profile folder (e.g.
-/docroot/profiles/contrib/lightning) and run:
+into a sub-profile, Lightning provides a binary:
 
-    composer run migrate-extender /path/to/your/extend/file/lightning.extend.yml
+    ./vendor/bin/lightning-subprofile /path/to/your/extend/file/lightning.extend.yml
 
-That will create a subprofile in /docroot/profiles/custom/ named
+Note that the path to your bin directory That will create a subprofile in /docroot/profiles/custom/ named
 lightning_extend. Install it with:
 
     drush site-install lightning_extend

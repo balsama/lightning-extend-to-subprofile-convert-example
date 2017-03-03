@@ -76,7 +76,6 @@ install:
   - composer install
 
   # Convert existing extend file to proper sub-profile.
-  - cd $TRAVIS_BUILD_DIR
   - ./bin/lightning-subprofile $TRAVIS_BUILD_DIR/docroot/sites/default/lightning.extend.yml
 
   # Install Lightning sub-profile.
