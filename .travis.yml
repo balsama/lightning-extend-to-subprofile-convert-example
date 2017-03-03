@@ -66,18 +66,22 @@ install:
   # Build the Lightning code base.
   - composer install
 
-  # Update to version of Lightning with subprofile support
+  # Install Lightning.
+  - cd $TRAVIS_BUILD_DIR/docroot
+  - ../bin/drush site-install lighting --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+
+  # Update to version of Lightning with sub-profile support.
+  - cd $TRAVIS_BUILD_DIR
   - composer require acquia/lightning:dev-8.x-subprofile --no-update
   - rm composer.lock
   - rm -rf docroot/core
   - composer install
 
-  # Convert existing extend file to proper subprofile
-  - cd docroot/profiles/contrib/lightning
-  - ls $TRAVIS_BUILD_DIR/docroot/sites/default/
+  # Convert existing extend file to proper sub-profile.
+  - cd $TRAVIS_BUILD_DIR/docroot/profiles/contrib/lightning
   - composer run migrate-extender $TRAVIS_BUILD_DIR/docroot/sites/default/lightning.extend.yml
 
-  # Install Lightning.
+  # Install Lightning sub-profile.
   - cd $TRAVIS_BUILD_DIR/docroot
   - ../bin/drush site-install lighting_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - ../bin/drush config-set system.logging error_level all --yes
