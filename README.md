@@ -21,7 +21,7 @@ into a sub-profile, Lightning provides a binary:**
 
     ./vendor/bin/lightning-subprofile /path/to/your/extend/file/lightning.extend.yml
 
-> **Note:** that the path to your bin directory might be different.
+> **Note:** The path to your bin directory might be different.
 
 > **Note:** The provided binary uses a custom DrupalConsole command that
   currently requires Drupal to be installed for it to work.
