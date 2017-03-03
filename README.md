@@ -1,5 +1,7 @@
 ## Drupal Lightning Extend -> Sub-profile
 
+[![Build Status](https://travis-ci.org/balsama/lightning-extend-to-subprofile-convert-example.svg?branch=master)](https://travis-ci.org/balsama/lightning-extend-to-subprofile-convert-example)
+
 ## What is this project?
 
 The [Lightning Drupal distribution](https://github.com/acquia/lightning)
