@@ -73,15 +73,16 @@ install:
   - composer install
 
   # Convert existing extend file to proper subprofile
+  - cd docroot/profiles/contrib/lightning
   - composer run migrate-extender docroot/sites/default/lightning.extend.yml
 
   # Install Lightning.
-  - cd docroot
-  - drush site-install lighting_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush config-set system.logging error_level all --yes
+  - cd $HOME/docroot
+  - ../bin/drush site-install lighting_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - ../bin/drush config-set system.logging error_level all --yes
 
 before_script:
-  - drush runserver --default-server=builtin 8080 &>/dev/null &
+  - ../bin/drush runserver --default-server=builtin 8080 &>/dev/null &
 
   # Start Selenium and dump its ginormous log into a temporary file.
   - jdk_switcher use oraclejdk8
