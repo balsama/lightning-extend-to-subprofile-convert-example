@@ -1,51 +1,66 @@
-This is a Composer-based installer for the [Lightning](https://www.drupal.org/project/lightning) Drupal distribution. Welcome to the future!
+## What this project is
 
-## Get Started
-You will need the following installed:
+The [Drupal distribution Lightning](https://github.com/acquia/lightning)
+provides a script which converts a legacy extend file into a sub-profile that
+extends Lightning. This project is used to test that functionality and
+Lightning's support for sub-profiles in general.
 
-* [Composer](https://getcomposer.org), obviously
-* [Node](https://nodejs.org), which includes the NPM package manager
+You do not need this package to convert an extend file into a sub-profile. The
+script to do so is included in Lightning itself. This is just an example.
 
-When you have those, run this command:
-```
-$ composer create-project acquia/lightning-project MY_PROJECT
-```
-Composer will create a new directory called MY_PROJECT containing a ```docroot``` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
+## How to use
+This project isn't meant to be used. But you might find value in reading through
+the .travis.yml file.
 
-## Maintenance
-```drush make```, ```drush pm-download```, ```drush pm-update``` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
+If you just want to convert your existing project's lightning.extend.yml file
+into a sub-profile, switch into your project's Lightning Profile folder (e.g.
+/docroot/profiles/contrib/lightning) and run:
 
-Let this handy table be your guide:
+    composer run migrate-extender /path/to/your/extend/file/lightning.extend.yml
 
-| Task                                            | Drush                                         | Composer                                          |
-|-------------------------------------------------|-----------------------------------------------|---------------------------------------------------|
-| Installing a contrib project (latest version)   | ```drush pm-download PROJECT```               | ```composer require drupal/PROJECT```         |
-| Installing a contrib project (specific version) | ```drush pm-download PROJECT-8.x-1.0-beta3``` | ```composer require drupal/PROJECT:1.0.0-beta3``` |
-| Updating all contrib projects and Drupal core   | ```drush pm-update```                         | ```composer update```                             |
-| Updating a single contrib project               | ```drush pm-update PROJECT```                 | ```composer update drupal/PROJECT```              |
-| Updating Drupal core                            | ```drush pm-update drupal```                  | ```composer update drupal/core```                 |
+That will create a subprofile in /docroot/profiles/custom/ named
+lightning_extend. Install it with:
 
-The magic is that Composer, unlike Drush, is a *dependency manager*. If module ```foo version: 1.0.0``` depends on ```baz version: 3.2.0```, Composer will not let you update baz to ```3.3.0``` (or downgrade it to ```3.1.0```, for that matter). Drush has no concept of dependency management. If you've ever accidentally hosed a site because of dependency issues like this, you've probably already realized how valuable Composer can be.
+    drush site-install lightning_extend
 
-But to be clear: **you still need Drush**. Tasks such as database updates (```drush updatedb```) are still firmly in Drush's province, and it's awesome at that stuff. This installer will install a copy of Drush (local to the project) in the ```bin``` directory.
+Lightning also provides a DrupalConsole command to create a new sub-profile
+interactively. To use that command, you must first install Lightning, then run:
 
-### Specifying a version
-you can specify a version from the command line with:
+    drupal lightning:subprofile
 
-    $ composer require drupal/<modulename>:<version> 
+## Background
 
-For example:
+See related blog post: [Extending Lightning - Part II](http://lightning.acquia.com/blog/extending-lightning-part-ii)
 
-    $ composer require drupal/ctools:3.0.0-alpha26
-    $ composer require drupal/token:1.x-dev 
+One of the problems with Drupal distributions is that they, by nature, contain
+an installation profile — and Drupal sites can only have one profile. That means
+that consumers of a distribution give up the ability to easily customize the out
+of the box experience.
 
-In these examples, the composer version 3.0.0-alpha26 maps to the drupal.org version 8.x-3.0-alpha26 and 1.x-dev maps to 8.x-1.x branch on drupal.org.
+To circumvent this problem, Lightning introduced lightning.extend.yml which
+allowed site builders to:
 
-If you specify a branch, such as 1.x you must add -dev to the end of the version.
+1. Install additional modules after Lightning had finished its installation
+2. Exclude certain Lightning components
+3. Redirect users to a custom URL upon completion
 
-**Composer is only responsible for maintaining the code base**.
+But this approach wasn't ideal. A better approach is to patch Drupal core to
+allow for true profile inheritance; that is, chain-able base-profiles and
+sub-profiles. (And to support getting that patch committed to Drupal core.)
 
-## Source Control
-If you peek at the ```.gitignore``` we provide, you'll see that certain directories, including all directories containing contributed projects, are excluded from source control. This might be a bit disconcerting if you're newly arrived from Planet Drush, but in a Composer-based project like this one, **you SHOULD NOT commit your installed dependencies to source control**.
+Lightning has done that, and provided a script to convert an existing
+lightning.extend.yml into a sub-profile that uses Lightning as a base profile.
 
-When you set up the project, Composer will create a file called ```composer.lock```, which is a list of which dependencies were installed, and in which versions. **Commit ```composer.lock``` to source control!** Then, when your colleagues want to spin up their own copies of the project, all they'll have to do is run ```composer install```, which will install the correct versions of everything in ```composer.lock```.
+## What this project does
+
+All of this project's instructions are in its .travis.yml file. The file
+instructs Travis CI to:
+
+1. Build the codebase from composer
+2. Install Drupal Lightning with an extend file that:
+  * Installs two additional Drupal contrib modules
+  * Excluded Lightning Layout and Lightning Search
+3. Convert the extend file into a sub-profile
+4. Reinstall Drupal using the new sub-profile
+5. Run Lightning's functional test suite
+6. Run some additional tests that test the sub-profile
