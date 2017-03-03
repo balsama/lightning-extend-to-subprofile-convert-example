@@ -59,6 +59,7 @@ class ScriptHandler {
 
       // Process relevant paths.
       $suite['paths'] = array_map([static::class, 'processPath'], $suite['paths']);
+      $suite['paths'][] = "tests/features";
 
       $extensions['Drupal\DrupalExtension']['subcontexts']['paths'] = array_map(
         [static::class, 'processPath'],
