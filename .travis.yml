@@ -64,7 +64,7 @@ install:
 
   # Install Lightning.
   - cd $TRAVIS_BUILD_DIR/docroot
-  - ../bin/drush site-install lighting --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - ../bin/drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
 
   # Update to version of Lightning with sub-profile support.
   - cd $TRAVIS_BUILD_DIR
@@ -79,7 +79,7 @@ install:
 
   # Install Lightning sub-profile.
   - cd $TRAVIS_BUILD_DIR/docroot
-  - ../bin/drush site-install lighting_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - ../bin/drush site-install lightning_extend --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - ../bin/drush config-set system.logging error_level all --yes
 
 before_script:
