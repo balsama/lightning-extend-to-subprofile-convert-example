@@ -68,7 +68,7 @@ install:
 
   # Update to version of Lightning with sub-profile support.
   - cd $TRAVIS_BUILD_DIR
-  - composer require acquia/lightning:dev-version-script --no-update
+  - composer require acquia/lightning:2.0.5 --no-update
   # We need to blow away the lock file and core entirely because of a bug in
   # composer-patches. See:
   # https://github.com/cweagans/composer-patches/issues/98
